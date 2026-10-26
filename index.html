@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flin RP</title>
+<style>
+:root{--bg:#07060d;--fg:#f4f2ff;--mut:#9a96b5;--a:#8b5cf6;--b:#22d3ee;--c:#f472b6;--bd:rgba(255,255,255,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;overflow-x:hidden}
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);opacity:.35;z-index:0;pointer-events:none;animation:fl 18s ease-in-out infinite}
+.b1{width:480px;height:480px;background:var(--a);top:-120px;left:-120px}
+.b2{width:420px;height:420px;background:var(--b);bottom:-100px;right:-100px;animation-delay:-6s}
+.b3{width:340px;height:340px;background:var(--c);top:40%;left:55%;animation-delay:-11s;opacity:.2}
+@keyframes fl{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,40px) scale(1.12)}66%{transform:translate(-40px,70px) scale(.92)}}
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--a),var(--b),var(--c));z-index:50}
+nav{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px max(22px,env(safe-area-inset-left));background:rgba(7,6,13,.6);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.logo{font-weight:900;letter-spacing:.08em;background:linear-gradient(90deg,var(--b),var(--a),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav div{display:flex;gap:22px;align-items:center}
+nav a{color:var(--mut);text-decoration:none;font-size:14px;transition:.25s}
+nav a:hover{color:#fff}
+main,footer{position:relative;z-index:1}
+section{max-width:1080px;margin:0 auto;padding:90px 22px}
+.hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.badge{display:inline-flex;gap:10px;align-items:center;padding:7px 16px;border:1px solid var(--bd);border-radius:99px;background:rgba(255,255,255,.04);font-size:13px;color:var(--mut)}
+.dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 0 0 #34d399;animation:pl 2s infinite}
+@keyframes pl{70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+h1{font-size:clamp(60px,15vw,170px);font-weight:900;letter-spacing:-.03em;line-height:1;margin:26px 0 10px;animation:gl 4s ease-in-out infinite alternate}
+h1 span{display:inline-block;opacity:0;transform:translateY(60px) rotate(8deg);animation:up .8s cubic-bezier(.2,.9,.3,1.2) forwards;animation-delay:calc(var(--i)*.07s + .2s)}
+@keyframes up{to{opacity:1;transform:none}}
+@keyframes gl{from{text-shadow:0 0 30px rgba(139,92,246,.7),0 0 80px rgba(34,211,238,.3)}to{text-shadow:0 0 40px rgba(244,114,182,.7),0 0 90px rgba(139,92,246,.4)}}
+.sub{font-size:clamp(18px,3vw,26px);color:var(--mut)}
+#word{display:inline-block;font-weight:700;background:linear-gradient(90deg,var(--b),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent;transition:.35s}
+#word.out{opacity:0;transform:translateY(12px);filter:blur(6px)}
+.cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:36px}
+.btn{position:relative;padding:15px 30px;border-radius:14px;font-weight:700;font-size:16px;color:#fff;text-decoration:none;border:1px solid var(--bd);background:rgba(255,255,255,.05);cursor:pointer;transition:.3s;overflow:hidden}
+.btn:hover{transform:translateY(-3px);border-color:var(--a)}
+.btn.main{border:0;background:linear-gradient(110deg,var(--a),var(--b),var(--c),var(--a));background-size:300% 100%;animation:sh 5s linear infinite;box-shadow:0 10px 40px -10px var(--a)}
+@keyframes sh{to{background-position:300% 0}}
+.ipbox{margin-top:28px;font-family:ui-monospace,Menlo,Consolas,monospace;padding:12px 22px;border-radius:12px;border:1px dashed rgba(255,255,255,.25);color:#cfd0ff;cursor:pointer;transition:.3s}
+.ipbox:hover{border-color:var(--b);color:#fff}
+.mq{overflow:hidden;border-block:1px solid var(--bd);background:rgba(255,255,255,.02);position:relative;z-index:1}
+.mq div{display:flex;width:max-content;gap:40px;padding:16px 0;animation:mq 28s linear infinite;font-weight:800;letter-spacing:.2em;color:rgba(255,255,255,.55);white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
+h2{font-size:clamp(30px,5vw,52px);font-weight:900;margin-bottom:14px}
+h2 em{font-style:normal;background:linear-gradient(90deg,var(--b),var(--a));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mut);max-width:620px;margin-bottom:44px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{position:relative;padding:30px;border-radius:22px;border:1px solid var(--bd);background:rgba(255,255,255,.04);backdrop-filter:blur(10px);transition:transform .25s,border-color .3s;overflow:hidden;transform-style:preserve-3d}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),rgba(139,92,246,.28),transparent 60%);opacity:0;transition:.3s;pointer-events:none}
+.card:hover{border-color:rgba(139,92,246,.6)}
+.card:hover::before{opacity:1}
+.ic{font-size:13px;font-weight:800;letter-spacing:.2em;color:var(--b);margin-bottom:14px}
+.card h3{font-size:24px;margin-bottom:8px}
+.card p{color:var(--mut);font-size:15px}
+.steps .card b{display:block;font-size:54px;font-weight:900;line-height:1;margin-bottom:10px;background:linear-gradient(180deg,#fff,rgba(255,255,255,.1));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead-card{position:relative;padding:44px;border-radius:26px;text-align:center;background:#0d0b1a;isolation:isolate}
+.lead-card::before{content:"";position:absolute;inset:-2px;border-radius:28px;z-index:-1;background:conic-gradient(from var(--r,0deg),var(--a),var(--b),var(--c),var(--a));animation:rt 6s linear infinite}
+@property --r{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes rt{to{--r:360deg}}
+.lead-card::after{content:"";position:absolute;inset:0;border-radius:26px;background:#0d0b1a;z-index:-1}
+.lead-card p{color:var(--mut);margin:10px auto 26px;max-width:520px}
+.chips{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.chip{padding:11px 20px;border-radius:99px;border:1px solid var(--bd);background:rgba(255,255,255,.05);color:#fff;text-decoration:none;font-size:15px;transition:.3s}
+.chip:hover{background:var(--a);transform:translateY(-3px)}
+footer{text-align:center;padding:50px 22px calc(50px + env(safe-area-inset-bottom));color:var(--mut);font-size:14px}
+footer .chips{margin-bottom:22px}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+#toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,30px);padding:12px 22px;border-radius:12px;background:#1b1830;border:1px solid var(--a);opacity:0;transition:.35s;z-index:60;pointer-events:none;text-align:center;max-width:calc(100vw - 32px)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:640px){nav div{gap:10px}nav div a:not(.btn){display:none}section{padding:64px 20px}.lead-card{padding:30px 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}h1 span,.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="net"></canvas>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<div id="bar"></div>
+
+<nav>
+  <span class="logo">FLIN RP</span>
+  <div>
+    <a href="#about">О проекте</a><a href="#join">Как начать</a><a href="#leaders">Лидерам</a>
+    <a class="btn" style="padding:9px 18px;font-size:14px" href="#" data-copy>Копировать IP</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero" id="top">
+    <div class="badge"><i class="dot"></i>Role Play · SA-MP · Сервер 01</div>
+    <h1 id="title" data-t="FLIN RP">FLIN RP</h1>
+    <p class="sub">Играй за <span id="word">Госструктуры</span></p>
+    <div class="cta">
+      <a class="btn main" href="#" data-k="download">Начать играть</a>
+      <a class="btn" href="https://vk.com/g.flin" target="_blank" rel="noopener">Паблик проекта</a>
+    </div>
+    <div class="ipbox ip" data-copy title="Нажми, чтобы скопировать"></div>
+  </section>
+
+  <div class="mq"><div id="mq"></div></div>
+
+  <section id="about">
+    <h2 class="rv">Три мира. <em>Один город.</em></h2>
+    <p class="lead rv" style="--d:.1s">Выбери свою сторону и строй историю персонажа так, как считаешь нужным.</p>
+    <div class="grid">
+      <div class="card tilt rv"><div class="ic">01</div><h3>Госструктуры</h3><p>Закон, порядок и служба городу: власть, правоохранители и спасатели.</p></div>
+      <div class="card tilt rv" style="--d:.12s"><div class="ic">02</div><h3>Гетто</h3><p>Улицы, районы и борьба за территорию. Своя банда, своё имя.</p></div>
+      <div class="card tilt rv" style="--d:.24s"><div class="ic">03</div><h3>Мафии</h3><p>Тихое влияние, деньги и связи. Семьи, которые решают многое.</p></div>
+    </div>
+  </section>
+
+  <section id="join">
+    <h2 class="rv">Как <em>начать</em></h2>
+    <p class="lead rv" style="--d:.1s">Три шага от установки до входа на сервер.</p>
+    <div class="grid steps">
+      <div class="card tilt rv"><b>1</b><h3>Установи</h3><p>Скачай клиент с лаунчером и установи на телефон.</p></div>
+      <div class="card tilt rv" style="--d:.12s"><b>2</b><h3>Введи ник</h3><p>Формат Имя_Фамилия, латиницей.</p></div>
+      <div class="card tilt rv" style="--d:.24s"><b>3</b><h3>Заходи</h3><p>Нажми «Играть» и попадёшь на сервер 01.</p></div>
+    </div>
+  </section>
+
+  <section id="leaders">
+    <div class="lead-card rv">
+      <h2>Набор <em>лидеров</em></h2>
+      <p>Открыты посты лидеров госструктур, гетто и мафий. Нужны опыт на RP-серверах, умение вести фракцию, активность и ответственность.</p>
+      <span class="btn" style="display:inline-block;cursor:default">Информация скоро появится</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="chips">
+    <a class="chip" href="https://vk.com/g.flin" target="_blank" rel="noopener">@g.flin · проект</a>
+    <a class="chip" href="https://vk.com/p.flin" target="_blank" rel="noopener">@p.flin · сервер 01</a>
+  </div>
+  © FLIN RP
+</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const CFG={
+  ip:"188.127.241.74:4170",
+  links:{
+    project:"https://vk.com/g.flin",
+    server:"https://vk.com/p.flin",
+    download:""
+  }
+};
+
+const t=$('#title');
+t.innerHTML=[...t.dataset.t].map((c,i)=>`<span style="--i:${i}">${c===' '?'&nbsp;':c}</span>`).join('');
+$$('.ip').forEach(e=>e.textContent=CFG.ip);
+$('#mq').innerHTML=Array(12).fill('<span>FLIN RP</span><span>·</span><span>СЕРВЕР 01</span><span>·</span><span>ROLE PLAY</span><span>·</span>').join('');
+
+const toast=$('#toast');let tt;
+function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),2400)}
+async function copy(txt){
+  try{
+    if(navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(txt);
+    else throw new Error('Clipboard API unavailable');
+  }catch(_){
+    const a=document.createElement('textarea');a.value=txt;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();
+    let ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();
+    if(!ok){say('Не удалось скопировать. IP: '+txt);return}
+  }
+  say('Скопировано: '+txt);
+}
+$$('[data-copy]').forEach(e=>e.addEventListener('click',e=>{e.preventDefault();copy(CFG.ip)}));
+$$('[data-k="download"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  if(CFG.links.download){location.href=CFG.links.download}
+  else say('Лаунчер появится скоро');
+}));
+
+const W=['Госструктуры','Гетто','Мафии'],w=$('#word');let wi=0;
+if(!RM)setInterval(()=>{w.classList.add('out');setTimeout(()=>{wi=(wi+1)%W.length;w.textContent=W[wi];w.classList.remove('out')},350)},2400);
+
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+  $$('.rv').forEach(e=>io.observe(e));
+}else $$('.rv').forEach(e=>e.classList.add('in'));
+
+$$('.tilt').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    c.style.transform=`perspective(700px) rotateX(${-y*10}deg) rotateY(${x*12}deg) translateY(-6px)`;
+    c.style.setProperty('--mx',(x+.5)*100+'%');c.style.setProperty('--my',(y+.5)*100+'%');
+  });
+  c.addEventListener('mouseleave',()=>c.style.transform='');
+});
+
+const bar=$('#bar');
+addEventListener('scroll',()=>{const h=document.documentElement;bar.style.transform=`scaleX(${scrollY/(h.scrollHeight-innerHeight||1)})`},{passive:true});
+
+const cv=$('#net'),cx=cv.getContext('2d');let WW,HH,P=[],m={x:-999,y:-999},raf=0;
+function rs(){
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  WW=innerWidth;HH=innerHeight;cv.width=Math.floor(WW*dpr);cv.height=Math.floor(HH*dpr);cv.style.width=WW+'px';cv.style.height=HH+'px';cx.setTransform(dpr,0,0,dpr,0,0);
+  P=Array.from({length:Math.min(90,Math.floor(WW*HH/16000))},()=>({x:Math.random()*WW,y:Math.random()*HH,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}));
+}
+addEventListener('resize',rs);
+addEventListener('mousemove',e=>{m.x=e.clientX;m.y=e.clientY});
+addEventListener('touchmove',e=>{if(e.touches.length){const q=e.touches[0];m.x=q.clientX;m.y=q.clientY}},{passive:true});
+rs();
+function fr(){
+  cx.clearRect(0,0,WW,HH);
+  for(const p of P){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>WW)p.vx*=-1;
+    if(p.y<0||p.y>HH)p.vy*=-1;
+    const dx=p.x-m.x,dy=p.y-m.y,d=Math.hypot(dx,dy);
+    if(d>0&&d<140){p.x+=dx/d*1.2;p.y+=dy/d*1.2}
+    cx.fillStyle='rgba(180,170,255,.7)';cx.beginPath();cx.arc(p.x,p.y,1.6,0,6.3);cx.fill();
+  }
+  for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+    const a=P[i],b=P[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<120){cx.strokeStyle=`rgba(139,92,246,${(1-d/120)*.35})`;cx.lineWidth=1;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()}
+  }
+  if(!RM)raf=requestAnimationFrame(fr);
+}
+if(!RM)fr();
+else {cx.clearRect(0,0,WW,HH)}
+})();
+</script>
+</body>
+  </html>
